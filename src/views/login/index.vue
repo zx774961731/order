@@ -12,7 +12,7 @@
         <h5 f-c-c text-24 font-normal color="#6a6a6a"><icon-custom-logo mr-10 text-50 color-primary /> {{ title }}</h5>
         <div mt-30>
           <n-input
-            v-model:value="loginInfo.name"
+            v-model:value="loginInfo.userId"
             autofocus
             class="text-16 items-center h-50 pl-10"
             placeholder="admin"
@@ -51,15 +51,18 @@ import { useStorage } from '@vueuse/core'
 import bgImg from '@/assets/images/login_bg.webp'
 import api from './api'
 import { addDynamicRoutes } from '@/router'
+import { useUserStore } from '@/store'
 
+import { login } from '@/api/zx'
+const userStore = useUserStore()
 const title = import.meta.env.VITE_TITLE
 
 const router = useRouter()
 const { query } = useRoute()
 
 const loginInfo = ref({
-  name: '',
-  password: '',
+  userId: 'staff1',
+  password: '123456',
 })
 
 initLoginInfo()
@@ -67,7 +70,8 @@ initLoginInfo()
 function initLoginInfo() {
   const localLoginInfo = lStorage.get('loginInfo')
   if (localLoginInfo) {
-    loginInfo.value.name = localLoginInfo.name || ''
+    userId
+    loginInfo.value.userId = localLoginInfo.userId || ''
     loginInfo.value.password = localLoginInfo.password || ''
   }
 }
@@ -75,19 +79,21 @@ function initLoginInfo() {
 const isRemember = useStorage('isRemember', false)
 const loading = ref(false)
 async function handleLogin() {
-  const { name, password } = loginInfo.value
-  if (!name || !password) {
+  const { userId, password } = loginInfo.value
+  if (!userId || !password) {
     $message.warning('请输入用户名和密码')
     return
   }
   try {
     loading.value = true
     $message.loading('正在验证...')
-    const res = await api.login({ name, password: password.toString() })
+    const res = await login({ userId, password })
+    userStore.getInfo(res)
     $message.success('登录成功')
-    setToken(res.data.token)
+
+    setToken('admin')
     if (isRemember.value) {
-      lStorage.set('loginInfo', { name, password })
+      lStorage.set('loginInfo', { userId, password })
     } else {
       lStorage.remove('loginInfo')
     }
@@ -100,8 +106,7 @@ async function handleLogin() {
       router.push('/')
     }
   } catch (error) {
-    console.error(error)
-    $message.removeMessage()
+    // console.log(Json)
   }
   loading.value = false
 }

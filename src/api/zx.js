@@ -3,14 +3,15 @@ const service = axios.create({
   baseURL: '/zx', // 配置开发环境的baseApi
   timeout: 5000, // 超时时间
 })
+import { useUserStore } from '@/store'
+
+const userStore = useUserStore()
+import { ref } from 'vue'
 
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    // 用户3
-    // config.headers['token'] = 'zxcsdfsfsfbcbcbbvbnm'
-    // 客服 cvxbdbdfdgfgfhgfgdgf zxcsdfsfsfbcbcbrgfdd lkjhgmnvbdghnxcfdsaq
-    config.headers['token'] = 'lkjhgmnvbdghnxcfdsaq'
+    config.headers['token'] = userStore.token
 
     return config // config必须返回
   },
@@ -22,20 +23,28 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    const { code, data, message } = response.data
+    const { code, data, msg } = response.data
     //   根据成功与否 执行操作
     if (code === 0) {
       return data
     } else {
-      console.log(message)
-      return Promise.reject(new Error(message))
+      $message.error(msg)
+      return Promise.reject(new Error(msg))
     }
   },
   (error) => {
-    console.log(error.message)
+    console.log(error.msg)
     return Promise.reject(error) // 返回执行错误的错误的promise对象 进入catch
   }
 )
+
+export function login(data) {
+  return service({
+    url: `/sys/login`,
+    method: 'post',
+    data,
+  })
+}
 
 export function getRecordList(data) {
   return service({

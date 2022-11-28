@@ -5,7 +5,7 @@ export const basicRoutes = [
     name: 'home',
     path: '/',
     component: Layout,
-    redirect: '/demo',
+    redirect: '/demo/createOrder',
     isHidden: true,
   },
   {

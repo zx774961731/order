@@ -17,11 +17,17 @@ export const useUserStore = defineStore('user', {
     name() {
       return this.userInfo?.name
     },
+    userName() {
+      return this.userInfo?.userName || '未知用户'
+    },
     avatar() {
       return this.userInfo?.avatar
     },
     role() {
       return this.userInfo?.role || []
+    },
+    token() {
+      return this.userInfo?.token || 'zxcsdfsfsfbcbcbrgfdd'
     },
   },
   actions: {
@@ -29,7 +35,7 @@ export const useUserStore = defineStore('user', {
       try {
         const res = await api.getUser()
         const { id, name, avatar, role } = res.data
-        this.userInfo = { id, name, avatar, role }
+        this.userInfo = { ...this.userInfo, id, name, avatar, role }
         return Promise.resolve(res.data)
       } catch (error) {
         return Promise.reject(error)
@@ -47,6 +53,12 @@ export const useUserStore = defineStore('user', {
     },
     setUserInfo(userInfo = {}) {
       this.userInfo = { ...this.userInfo, ...userInfo }
+    },
+
+    getInfo(data) {
+      console.log(data, 'data')
+      this.userInfo.userName = data.userName
+      this.userInfo.token = data.token
     },
   },
 })

@@ -19,10 +19,12 @@
       :x="contextMenuOption.x"
       :y="contextMenuOption.y"
     />
+    <Avatar />
   </ScrollX>
 </template>
 
 <script setup>
+import Avatar from '../UserAvatar.vue'
 import ContextMenu from './ContextMenu.vue'
 import { useTagsStore } from '@/store'
 import ScrollX from '@/components/common/ScrollX.vue'
