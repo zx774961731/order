@@ -3,16 +3,13 @@ const service = axios.create({
   baseURL: '/zx', // 配置开发环境的baseApi
   timeout: 5000, // 超时时间
 })
-import { useUserStore } from '@/store'
-
-const userStore = useUserStore()
-import { ref } from 'vue'
+import { getToken } from '@/utils'
 
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    config.headers['token'] = userStore.token
-
+    const token = getToken()
+    config.headers['token'] = token
     return config // config必须返回
   },
   (error) => {
@@ -29,7 +26,7 @@ service.interceptors.response.use(
       return data
     } else {
       $message.error(msg)
-      return Promise.reject(new Error(msg))
+      return response.data.code
     }
   },
   (error) => {

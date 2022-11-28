@@ -63,7 +63,8 @@
 import { getRecordList } from '@/api/zx'
 import dayjs from 'dayjs'
 import { h, onMounted, reactive, ref } from 'vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const isShow = ref(false)
 const productShow = ref(false)
 const productList = ['产品1', '产品2', '产品3', '产品4', '产品5', '产品6', '产品7']
@@ -115,28 +116,6 @@ const pageChange = (pageNo) => {
   page.pageNo = pageNo
   getList()
 }
-
-// const pagination = ref({
-//   itemCount: data.value.totalCount,
-//   pageCount: page.pageNo,
-//   showQuickJumper: true,
-//   page: page.pageNo,
-//   pageSize: page.pageSize,
-//   showSizePicker: true,
-//   pageSizes: [1, 2, 20],
-//   pageCount: '2',
-//   onUpdatePage: (a) => {
-//     console.log(a)
-//     pagination.value.page = page
-//   },
-//   onUpdatePageSize: (pageSize) => {
-//     pagination.value.pageSize = pageSize
-//     page.pageSize = pageSize
-//     getList()
-//     console.log(pagination)
-//   },
-//   goto: () => '123',
-// })
 
 const questionType = [
   {

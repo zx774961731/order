@@ -35,6 +35,7 @@ export const NOT_FOUND_ROUTE = {
 export const EMPTY_ROUTE = {
   name: 'Empty',
   path: '/:pathMatch(.*)*',
+  redirect: '/404',
   component: null,
 }
 

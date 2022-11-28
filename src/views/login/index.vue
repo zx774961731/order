@@ -46,19 +46,17 @@
 </template>
 
 <script setup>
-import { lStorage, setToken } from '@/utils'
+import { lStorage } from '@/utils'
 import { useStorage } from '@vueuse/core'
 import bgImg from '@/assets/images/login_bg.webp'
-import api from './api'
-import { addDynamicRoutes } from '@/router'
 import { useUserStore } from '@/store'
+import { setToken } from '@/utils'
 
 import { login } from '@/api/zx'
 const userStore = useUserStore()
 const title = import.meta.env.VITE_TITLE
 
 const router = useRouter()
-const { query } = useRoute()
 
 const loginInfo = ref({
   userId: '',
@@ -70,7 +68,6 @@ initLoginInfo()
 function initLoginInfo() {
   const localLoginInfo = lStorage.get('loginInfo')
   if (localLoginInfo) {
-    // userId
     loginInfo.value.userId = localLoginInfo.userId || ''
     loginInfo.value.password = localLoginInfo.password || ''
   }
@@ -84,30 +81,22 @@ async function handleLogin() {
     $message.warning('请输入用户名和密码')
     return
   }
-  try {
-    loading.value = true
-    $message.loading('正在验证...')
-    const res = await login({ userId, password })
-    userStore.getInfo(res)
-    $message.success('登录成功')
+  loading.value = true
+  $message.loading('正在验证...')
+  const res = await login({ userId, password })
+  userStore.getInfo(res)
 
-    setToken('admin')
+  if (res !== -1) {
+    setToken(res.token)
+    $message.success('登录成功')
     if (isRemember.value) {
-      lStorage.set('loginInfo', { userId, password })
+      lStorage.set('loginInfo', { userId, password, userName: res.userName })
     } else {
       lStorage.remove('loginInfo')
     }
-    await addDynamicRoutes()
-    if (query.redirect) {
-      const path = query.redirect
-      Reflect.deleteProperty(query, 'redirect')
-      router.push({ path, query })
-    } else {
-      router.push('/')
-    }
-  } catch (error) {
-    // console.log(Json)
+    router.push('/')
   }
+
   loading.value = false
 }
 </script>

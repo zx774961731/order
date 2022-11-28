@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { resetRouter } from '@/router'
-import { useTagsStore, usePermissionStore } from '@/store'
-import { removeToken, toLogin } from '@/utils'
+import { router } from '@/router'
+import { useTagsStore } from '@/store'
+import { removeToken } from '@/utils'
 import api from '@/api'
 
 export const useUserStore = defineStore('user', {
@@ -11,20 +11,8 @@ export const useUserStore = defineStore('user', {
     }
   },
   getters: {
-    userId() {
-      return this.userInfo?.id
-    },
-    name() {
-      return this.userInfo?.name
-    },
     userName() {
       return this.userInfo?.userName || '未知用户'
-    },
-    avatar() {
-      return this.userInfo?.avatar
-    },
-    role() {
-      return this.userInfo?.role || []
     },
     token() {
       return this.userInfo?.token || 'zxcsdfsfsfbcbcbrgfdd'
@@ -43,13 +31,9 @@ export const useUserStore = defineStore('user', {
     },
     async logout() {
       const { resetTags } = useTagsStore()
-      const { resetPermission } = usePermissionStore()
       removeToken()
       resetTags()
-      resetPermission()
-      resetRouter()
-      this.$reset()
-      toLogin()
+      router.push('/login')
     },
     setUserInfo(userInfo = {}) {
       this.userInfo = { ...this.userInfo, ...userInfo }

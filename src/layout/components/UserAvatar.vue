@@ -3,7 +3,7 @@
     <div flex items-center cursor-pointer>
       <!-- <img :src="userStore.avatar" mr10 w-35 h-35 rounded-full /> -->
       <!-- <span>{{ userStore.name }}</span> -->
-      <span>{{ userStore.userName }}</span>
+      <span>{{ name }}</span>
     </div>
   </n-dropdown>
 </template>
@@ -11,7 +11,9 @@
 <script setup>
 import { useUserStore } from '@/store'
 import { renderIcon } from '@/utils'
+import { lStorage } from '@/utils'
 
+const name = lStorage.getItem('LoginInfo').value.userName
 const userStore = useUserStore()
 
 const options = [

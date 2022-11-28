@@ -181,8 +181,8 @@ const status = [
 ]
 
 const columns = [
-  { title: '工单编号', key: 'ticketId', width: 150 },
-  { title: '用户名称', key: 'ticketId' },
+  { title: '工单编号', key: 'ticketId', ellipsis: { tooltip: true } },
+  { title: '用户名称', key: 'customerUserName' },
   { title: '产品', key: 'product', ellipsis: { tooltip: true } },
   {
     title: '问题分类',
@@ -232,8 +232,8 @@ const columns = [
               path: '/orderDetail',
               query: {
                 orderId: row.ticketId,
-                fromPage: 'doneOrderTable'
-              }
+                fromPage: 'doneOrderTable',
+              },
             })
           },
           style: { marginRight: '8px' },

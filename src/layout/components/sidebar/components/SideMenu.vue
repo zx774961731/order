@@ -12,16 +12,16 @@
 </template>
 
 <script setup>
-import { usePermissionStore, useAppStore } from '@/store'
+import { useAppStore } from '@/store'
 import { renderCustomIcon, renderIcon, isExternal } from '@/utils'
+import { asyncRoutes } from '@/router/routes'
 
 const router = useRouter()
 const curRoute = useRoute()
-const permissionStore = usePermissionStore()
 const appStore = useAppStore()
 
 const menuOptions = computed(() => {
-  return permissionStore.menus.map((item) => getMenuItem(item)).sort((a, b) => a.order - b.order)
+  return asyncRoutes.map((item) => getMenuItem(item)).sort((a, b) => a.order - b.order)
 })
 
 function resolvePath(basePath, path) {
