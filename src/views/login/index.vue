@@ -15,7 +15,7 @@
             v-model:value="loginInfo.userId"
             autofocus
             class="text-16 items-center h-50 pl-10"
-            placeholder="admin"
+            placeholder="请输入账号"
             :maxlength="20"
           />
         </div>
@@ -25,7 +25,7 @@
             class="text-16 items-center h-50 pl-10"
             type="password"
             show-password-on="mousedown"
-            placeholder="123456"
+            placeholder="请输入密码"
             :maxlength="20"
             @keydown.enter="handleLogin"
           />
@@ -61,8 +61,8 @@ const router = useRouter()
 const { query } = useRoute()
 
 const loginInfo = ref({
-  userId: 'staff1',
-  password: '123456',
+  userId: '',
+  password: '',
 })
 
 initLoginInfo()
@@ -70,7 +70,7 @@ initLoginInfo()
 function initLoginInfo() {
   const localLoginInfo = lStorage.get('loginInfo')
   if (localLoginInfo) {
-    userId
+    // userId
     loginInfo.value.userId = localLoginInfo.userId || ''
     loginInfo.value.password = localLoginInfo.password || ''
   }

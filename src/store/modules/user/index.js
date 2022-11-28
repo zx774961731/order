@@ -56,7 +56,6 @@ export const useUserStore = defineStore('user', {
     },
 
     getInfo(data) {
-      console.log(data, 'data')
       this.userInfo.userName = data.userName
       this.userInfo.token = data.token
     },
