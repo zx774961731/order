@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { getRecordList } from '@/api/zx'
+import { getRecordList, deleteTicket } from '@/api/zx'
 import dayjs from 'dayjs'
 import { h, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -166,7 +166,7 @@ const status = [
 ]
 
 const columns = [
-  { title: '工单编号', key: 'ticketId', width: 150 },
+  { title: '工单编号', key: 'ticketId', ellipsis: { tooltip: true } },
   { title: '产品', key: 'product', ellipsis: { tooltip: true } },
   {
     title: '问题分类',
@@ -213,7 +213,10 @@ const columns = [
           'a',
           {
             onClick: () => {
-              console.log('跳转详情页')
+              router.push({
+                name: 'orderDetail',
+                query: { ticketId: row.ticketId },
+              })
             },
             style: { marginRight: '8px' },
           },
@@ -222,8 +225,10 @@ const columns = [
         h(
           'a',
           {
-            onClick: () => {
-              console.log('撤销工单')
+            onClick: async () => {
+              const res = await deleteTicket(row.ticketId)
+              $message.success(res)
+              getList()
             },
             style: { display: row.status == 1 ? 'contents' : 'none' },
           },

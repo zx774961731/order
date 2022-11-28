@@ -66,6 +66,16 @@ export function getDoneList(data) {
     data,
   })
 }
+
+export function deleteTicket(ticketId) {
+  return service({
+    url: `/customer/ticket/deleteTicket`,
+    method: 'post',
+    data: {
+      ticketId,
+    },
+  })
+}
 /**====================运营人员项目接口===================== */
 // 创建提交工单
 export function submitOrder(data) {

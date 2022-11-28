@@ -5,8 +5,9 @@ export default {
   path: '/demo',
   component: Layout,
   redirect: '/demo/createOrder',
+  isHidden: true,
   meta: {
-    title: '示例页面',
+    title: '用户',
     customIcon: 'logo',
     role: ['admin'],
     requireAuth: true,

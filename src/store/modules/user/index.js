@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { router } from '@/router'
 import { useTagsStore } from '@/store'
 import { removeToken } from '@/utils'
-import api from '@/api'
 
 export const useUserStore = defineStore('user', {
   state() {
@@ -19,16 +18,6 @@ export const useUserStore = defineStore('user', {
     },
   },
   actions: {
-    async getUserInfo() {
-      try {
-        const res = await api.getUser()
-        const { id, name, avatar, role } = res.data
-        this.userInfo = { ...this.userInfo, id, name, avatar, role }
-        return Promise.resolve(res.data)
-      } catch (error) {
-        return Promise.reject(error)
-      }
-    },
     async logout() {
       const { resetTags } = useTagsStore()
       removeToken()

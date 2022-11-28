@@ -1,6 +1,6 @@
 <template>
-  <ScrollX>
-    <n-tag
+  <ScrollX :style="{ width: '100%' }">
+    <!-- <n-tag
       v-for="tag in tagsStore.tags"
       :key="tag.path"
       class="px-15 mx-5 rounded-4 cursor-pointer hover:color-primary"
@@ -18,7 +18,7 @@
       :current-path="contextMenuOption.currentPath"
       :x="contextMenuOption.x"
       :y="contextMenuOption.y"
-    />
+    /> -->
     <Avatar />
   </ScrollX>
 </template>
@@ -28,6 +28,7 @@ import Avatar from '../UserAvatar.vue'
 import ContextMenu from './ContextMenu.vue'
 import { useTagsStore } from '@/store'
 import ScrollX from '@/components/common/ScrollX.vue'
+import { width } from 'dom7'
 
 const route = useRoute()
 const router = useRouter()
