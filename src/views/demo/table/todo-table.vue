@@ -16,9 +16,9 @@
       <n-collapse class="collapse" @item-header-click="itemClick">
         <n-collapse-item title="更多" name="1"> </n-collapse-item>
       </n-collapse>
-      <div>
-        <n-button @click="getList()">搜索</n-button>
-        <n-button @click="restForm">取消</n-button>
+      <div class="click-button">
+        <n-button type="primary" class="search-button" @click="getList()">搜索</n-button>
+        <n-button strong secondary @click="restForm">取消</n-button>
       </div>
     </div>
     <div v-if="isShow" class="towLine">

@@ -7,7 +7,7 @@ export default {
   redirect: '/demo/createOrder',
   isHidden: true,
   meta: {
-    title: '用户',
+    title: '客服',
     customIcon: 'logo',
     role: ['admin'],
     requireAuth: true,
@@ -32,18 +32,6 @@ export default {
       component: () => import('./OrderDetail.vue'),
       isHidden: true,
       content: '工单详情',
-    },
-    {
-      name: 'recordTable',
-      path: 'record-table',
-      component: () => import('./table/record-list.vue'),
-      meta: {
-        title: '我的服务记录',
-        icon: 'ic:baseline-table-view',
-        role: ['admin'],
-        requireAuth: true,
-        keepAlive: true,
-      },
     },
     {
       name: 'todoTable',

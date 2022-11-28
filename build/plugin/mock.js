@@ -5,9 +5,5 @@ export function configMockPlugin(isBuild) {
     mockPath: 'mock/api',
     localEnabled: !isBuild,
     prodEnabled: isBuild,
-    injectCode: `
-      import { setupProdMockServer } from '../mock';
-      setupProdMockServer();
-    `,
   })
 }
